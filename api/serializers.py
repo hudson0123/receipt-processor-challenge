@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import ReceiptData, Item
+from .models import ReceiptData
 
+# This will serialize the data for incoming and outgoing api data.
 class ReceiptDataSerializer(serializers.ModelSerializer):
         
     class Meta:
@@ -8,14 +9,8 @@ class ReceiptDataSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "points",
-            "retailer",
-            "purchaseDate",
-            "purchaseTime",
-            "total",
         )
         
         extra_kwargs = {
             "points": {"read_only": True},
-
         }
-
