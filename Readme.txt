@@ -1,4 +1,6 @@
-This is a API project for Fetech the following is the description of the API provided.
+This is a API project for Fetch the following is the description of the API provided.
+
+Thank you for taking the time to look at my work!
 
 Running with Docker Instructions:
 
