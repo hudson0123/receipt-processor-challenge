@@ -2,9 +2,7 @@ This is a API project for Fetech the following is the description of the API pro
 
 Running with Docker Instructions:
 
-1. Run the following comand:  docker build -t receipt-processor-challenge .
-
-2. Run the following command:  docker run -p 8000:8000 receipt-processor-challenge
+1. Run the following comand:  docker-compose up --build
 
 3. Interact with the api on localhost:8000
 
