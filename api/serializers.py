@@ -1,15 +1,32 @@
 from rest_framework import serializers
-from .models import Receipt
+from .models import ReceiptData, Item
 
-class ReceiptSerializer(serializers.ModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Receipt
+        model = Item
+        fields = (
+            "shortDescription",
+            "price"
+        )
+
+class ReceiptDataSerializer(serializers.ModelSerializer):
+    
+    items = ItemSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = ReceiptData
         fields = (
             "id",
             "points",
+            "retailer",
+            "purchaseDate",
+            "purchaseTime",
+            "total",
+            "items",
         )
         
         extra_kwargs = {
-            "id": {"read_only": True}
+            "points": {"read_only": True}
         }
+
