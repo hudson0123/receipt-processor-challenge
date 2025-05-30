@@ -10,11 +10,10 @@ from .utils import calculate_points
 # Create your views here.
 @api_view(['POST'])
 def CreateReceipt(request):
-    print(request.data)
     serializer = ReceiptDataSerializer(data= request.data)
     if serializer.is_valid():
         serializer.save(points=calculate_points(request.data))
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"id": serializer.data['id'] }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
