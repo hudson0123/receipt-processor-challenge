@@ -2,16 +2,29 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import ReceiptData
 from .serializers import ReceiptDataSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .utils import calculate_points
 
 # Create your views here.
-class CreateReceipt(generics.CreateAPIView):
-    queryset = ReceiptData.objects.all()
-    serializer_class = ReceiptDataSerializer
+@api_view(['POST'])
+def CreateReceipt(request):
+    print(request.data)
+    serializer = ReceiptDataSerializer(data= request.data)
+    if serializer.is_valid():
+        serializer.save(points=calculate_points(request.data))
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def RetrieveReceipt(request, pk):
     
-    def perform_create(self, serializer): 
-        print(serializer.validated_data)
-        instance = serializer.save(points=5)
+    try:
+        receipt = ReceiptData.objects.get(id = pk)
+    except ReceiptData.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     
-class RetrieveReceipt(generics.RetrieveAPIView):
-    queryset = ReceiptData.objects.all()
-    serializer_class = ReceiptDataSerializer
+    serializer = ReceiptDataSerializer(receipt)
+    return Response({ "points": serializer.data['points'] })
+    

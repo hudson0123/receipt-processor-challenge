@@ -27,6 +27,7 @@ class ReceiptDataSerializer(serializers.ModelSerializer):
         )
         
         extra_kwargs = {
-            "points": {"read_only": True}
+            "points": {"read_only": True},
+
         }
 
